@@ -164,14 +164,14 @@ The result was a **clean, structured DataFrame** ready for targeted analysis by 
 ## Key Analysis and Insights
 **Q1. What types of mental health issues are more common for each work arrangement?**
 
-### Objective
+**Objective**
 To identify how different work environments — **Remote**, **Hybrid**, and **Onsite** — influence the type and frequency of mental health issues reported by employees.
 
 This analysis helps organizations tailor **mental wellness support** to specific working conditions.
 
 ---
 
-### Key Findings
+**Key Findings**
 
 After cleaning and exploding multi-response entries from the `Mental_Health_Status` column, we found the following:
 
@@ -187,16 +187,13 @@ After cleaning and exploding multi-response entries from the `Mental_Health_Stat
 
 ---
 
-### Interpretation
+**Interpretation**
 
 - **Onsite employees are most at risk** for intense, chronic stress and emotional strain — likely due to environmental factors, rigid schedules, and commuting.  
 - **Remote workers**, while shielded from some stressors, are more vulnerable to **isolation** and **anxiety**, potentially due to lack of daily in-person connection.  
 - **Hybrid work** appears to strike a balance, showing a **diversified but moderate risk profile**, supporting its reputation as a more sustainable long-term model.
 
 ---
-
-### Python Code
-
 ```python
 # Filter out 'None' values from mental health
 mh_df = df[df["Mental_Health_Status"] != "None"].copy()
@@ -217,20 +214,40 @@ plt.ylabel("Number of Cases")
 plt.legend(title="Mental Health Condition", bbox_to_anchor=(1.05, 1), loc="upper left")
 plt.tight_layout()
 plt.show()
+```
 
 **Q2. What factors are most associated with high burnout levels?**
 
-### 🧭 Objective
+**Objective**
 
 To identify which **demographic** and **workplace factors** are most strongly linked to high burnout. This helps employers understand where burnout risk is concentrated and develop targeted interventions.
 
 ---
 
-### 🧪 Analytical Steps & Insights
+**Analytical Steps & Insights**
 
-#### 🔹 Step A: Burnout Level by Gender
+**Step A: Burnout Level by Gender**
 
 ```python
 burnout_by_gender = df[df["Mental_Health_Status"] == "Burnout"].groupby(["Gender", "Burnout_Level"]).size().reset_index(name="Count")
+
+# Plot Burnout by Gender
+plt.figure(figsize=(8, 5))
+sns.barplot(data=gender_burnout, x="Gender", y="Count", hue="Burnout_Level", palette="flare")
+plt.title("Burnout Levels by Gender")
+plt.xlabel("Gender")
+plt.ylabel("Number of Burnout Cases")
+plt.legend(title="Burnout Level")
+plt.tight_layout()
+plt.show()
+```
+
+| Gender | High Burnout | Medium Burnout | Low Burnout | Total |
+|--------|--------------|----------------|-------------|-------|
+| Male   | 56           | 80             | 44          | 180   |
+| Female | 53           | 83             | 48          | 184   |
+
+
+
 
 
