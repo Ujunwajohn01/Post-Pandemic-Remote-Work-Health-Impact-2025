@@ -162,7 +162,7 @@ Before analysis, the dataset was cleaned and prepared to ensure consistency, acc
 The result was a **clean, structured DataFrame** ready for targeted analysis by demographic, regional, and health-related dimensions.
 
 ## Key Analysis and Insights
-**Q1. What types of mental health issues are more common for each work arrangement?**
+### Q1. What types of mental health issues are more common for each work arrangement?
 
 **Objective**
 To identify how different work environments — **Remote**, **Hybrid**, and **Onsite** — influence the type and frequency of mental health issues reported by employees.
@@ -216,7 +216,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Q2. What factors are most associated with high burnout levels?**
+### Q2. What factors are most associated with high burnout levels?
 
 **Objective**
 
@@ -247,7 +247,230 @@ plt.show()
 | Male   | 56           | 80             | 44          | 180   |
 | Female | 53           | 83             | 48          | 184   |
 
+**Interpretation:** Burnout is almost equally reported between genders, with slightly higher medium burnout among females.
 
+---
+
+**Step B: Burnout Level by Work Arrangement**
+
+```python
+burnout_by_arrangement = df[df["Mental_Health_Status"] == "Burnout"].groupby(["Work_Arrangement", "Burnout_Level"]).size().reset_index(name="Count")
+
+# Plot Burnout by Work Arrangement
+sns.barplot(data=burnout_by_arrangement, x="Work_Arrangement", y="Count", hue="Burnout_Level", palette="flare")
+plt.title("Burnout Level by Work Arrangement")
+plt.show()
+```
+
+| Work Arrangement | High Burnout | Medium Burnout | Low Burnout | Total |
+|------------------|--------------|----------------|-------------|--------|
+| Remote           | 21           | 35             | 28          | 84     |
+| Hybrid           | 42           | 53             | 27          | 122    |
+| Onsite           | 46           | 55             | 63          | 164    |
+
+**Interpretation:** Onsite employees had the highest total burnout, including high burnout cases. Hybrid workers showed a more moderate distribution.
+
+---
+
+**Step C: Burnout Level by Working Hours**
+
+```python
+df_burnout_hours = df[df["Mental_Health_Status"] == "Burnout"].copy()
+df_burnout_hours["Hours_Group"] = pd.cut(df_burnout_hours["Hours_Per_Week"], bins=[0, 20, 35, 45, 60, 100], labels=["<20", "21–35", "36–45", "46–60", "60+"])
+burnout_by_hours = df_burnout_hours.groupby(["Hours_Group", "Burnout_Level"]).size().reset_index(name="Count")
+
+# Plot Burnout by Working Hours
+plt.figure(figsize=(8, 5))
+sns.barplot(data=hours_summary, x="Hours_Category", y="Count", hue="Burnout_Level", palette="mako")
+plt.title("Burnout Levels by Working Hours")
+plt.xlabel("Working Hours Per Week")
+plt.ylabel("Number of Burnout Cases")
+plt.legend(title="Burnout Level")
+plt.tight_layout()
+plt.show()
+```
+
+| Hours Group | High Burnout | Medium Burnout | Low Burnout | Total |
+|-------------|--------------|----------------|-------------|--------|
+| <20         | 0            | 0              | 0           | 0      |
+| 21–35       | 4            | 5              | 3           | 12     |
+| 36–45       | 41           | 53             | 35          | 129    |
+| 46–60       | 55           | 90             | 41          | 186    |
+| 60+         | 19           | 30             | 16          | 65     |
+
+
+**Interpretation:** Burnout peaks in the 46–60 hour/week range. It drops again at 60+, possibly due to autonomy, executive roles, or underreporting.
+
+---
+
+**Step D: Burnout Level by Age Group**
+
+```python
+df_burnout_age = df[df["Mental_Health_Status"] == "Burnout"].copy()
+df_burnout_age["Age_Group"] = pd.cut(df_burnout_age["Age"], bins=[17, 25, 35, 45, 60, 100], labels=["18–25", "26–35", "36–45", "46–60", "60+"])
+burnout_by_age = df_burnout_age.groupby(["Age_Group", "Burnout_Level"]).size().reset_index(name="Count")
+
+# Plot Burnout by Age group
+plt.figure(figsize=(8, 5))
+sns.barplot(data=age_summary, x="Age_Group", y="Count", hue="Burnout_Level", palette="rocket")
+plt.title("Burnout Levels by Age Group")
+plt.xlabel("Age Group")
+plt.ylabel("Number of Burnout Cases")
+plt.legend(title="Burnout Level")
+plt.tight_layout()
+plt.show()
+```
+
+| Age Group | High Burnout | Medium Burnout | Low Burnout | Total |
+|-----------|--------------|----------------|-------------|--------|
+| 18–25     | 12           | 14             | 7           | 33     |
+| 26–35     | 29           | 37             | 20          | 86     |
+| 36–45     | 27           | 55             | 25          | 107    |
+| 46–60     | 36           | 58             | 32          | 126    |
+| 60+       | 15           | 14             | 11          | 40     |
+
+
+**Interpretation:** The 26–35 age group had the highest number of high burnout cases, supporting the idea that early-career professionals face intense pressure.
+
+---
+
+**Insights**
+
+Burnout is not driven by a single factor — rather, it emerges from the intersection of personal demographics and workplace conditions. The analysis reveals some clear patterns:
+
+Working hours are a major contributor: employees working 46–60 hours per week reported the highest number of high burnout cases (55). This suggests that sustained extended hours significantly increase emotional and physical strain, especially without adequate support.
+
+Age plays a crucial role: the 26–35 age group reported the highest high burnout count (29). This demographic likely includes early- to mid-career professionals navigating career development, increased responsibilities, and life transitions — all of which contribute to pressure and fatigue.
+
+Work arrangement matters: Onsite workers had the highest total burnout levels, including 46 high burnout cases. Unlike remote or hybrid settings, onsite roles may offer less flexibility, more commuting stress, and fewer opportunities for autonomy or personalized routines.
+
+Gender, on the other hand, did not show a significant difference in burnout levels. Both males and females reported similar counts, indicating that burnout is more likely influenced by structural and role-related factors than by gender alone.
+
+**Key takeaway:** The most vulnerable employees are those in high-demand roles, working long hours, often onsite, and in early or mid-career stages. Recognizing these burnout hotspots can help organizations deploy targeted wellness initiatives, reduce attrition, and foster healthier work environments.
+
+### Q3. Are there any notable physical health issues reported, and do they vary by industry or work arrangement?
+
+**Objective**
+
+To explore whether certain physical health complaints (e.g. back pain, eye strain) are more common in specific **industries** or **work arrangements**. This analysis helps identify where **ergonomic risks** or **job-specific physical demands** are concentrated.
+
+---
+
+**Data Processing**
+
+The `Physical_Health_Issues` column contains **multiple symptoms per employee**, separated by `; `. We used the `explode()` function to split and analyze them individually.
+
+```python
+# Filter out 'None' values
+health_df = df[df["Physical_Health_Issues"] != "None"].copy()
+
+# Explode multi-value column
+health_df["Physical_Health_Issues"] = health_df["Physical_Health_Issues"].str.split("; ")
+health_df = health_df.explode("Physical_Health_Issues")
+```
+
+---
+
+**Step A: Top Reported Physical Health Issues**
+
+```python
+issue_counts = health_df["Physical_Health_Issues"].value_counts().reset_index()
+issue_counts.columns = ["Physical_Health_Issue", "Count"]
+
+plt.figure(figsize=(10, 5))
+sns.barplot(data=issue_counts, x="Count", y="Physical_Health_Issue", palette="crest")
+plt.title("Common Physical Health Issues (Exploded)")
+plt.xlabel("Number of People")
+plt.ylabel("Health Issue")
+plt.tight_layout()
+plt.show()
+```
+
+| Physical Health Issue | Count |
+|------------------------|-------|
+| Back Pain              | 287   |
+| Eye Strain             | 263   |
+| Neck Pain              | 217   |
+| Wrist Pain             | 196   |
+| Fatigue                | 188   |
+
+**Interpretation:** The most frequently reported complaints are back pain and eye strain, both common in desk-bound, screen-heavy roles.
+
+---
+
+**Step B: Top Physical Health Issues by Industry**
+
+```python
+industry_issues = health_df.groupby(["Industry", "Physical_Health_Issues"]).size().reset_index(name="Count")
+
+plt.figure(figsize=(12, 6))
+sns.barplot(data=industry_issues, y="Industry", x="Count", hue="Physical_Health_Issues", palette="viridis")
+plt.title("Physical Health Issues by Industry")
+plt.xlabel("Number of People")
+plt.ylabel("Industry")
+plt.legend(title="Health Issue", bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.tight_layout()
+plt.show()
+```
+
+| Industry              | Most Reported Issue | Count |
+|-----------------------|----------------------|-------|
+| Professional Services | Eye Strain           | 372   |
+| Technology            | Back Pain            | 314   |
+| Finance               | Eye Strain           | 192   |
+| Manufacturing         | Back Pain            | 176   |
+| Education             | Shoulder Pain        | 163   |
+| Healthcare            | Eye Strain           | 130   |
+| Marketing             | Back Pain            | 102   |
+| Retail                | Eye Strain           | 97    |
+| Customer Service      | Eye Strain           | 92    |
+
+**Interpretation:** Eye strain is the most common issue across service and desk-based industries, while back pain dominates in more operational or sedentary roles like Technology and Manufacturing.
+Education stands out with a higher rate of shoulder pain, possibly from posture, lifting, or multitasking duties.
+
+---
+
+**Step C: Top Physical Health Issues by Work Arrangement**
+
+```python
+arrangement_issues = health_df.groupby(["Work_Arrangement", "Physical_Health_Issues"]).size().reset_index(name="Count")
+
+plt.figure(figsize=(10, 6))
+sns.barplot(data=arrangement_issues, x="Work_Arrangement", y="Count", hue="Physical_Health_Issues", palette="coolwarm")
+plt.title("Physical Health Issues by Work Arrangement")
+plt.xlabel("Work Arrangement")
+plt.ylabel("Number of People")
+plt.legend(title="Health Issue", bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.tight_layout()
+plt.show()
+```
+
+| Work Arrangement | Most Reported Issue | Count |
+|------------------|----------------------|-------|
+| Remote           | Eye Strain           | 96    |
+| Hybrid           | Back Pain            | 102   |
+| Onsite           | Back Pain            | 89    |
+
+**Interpretation:**
+- Remote workers experience more eye strain, likely from screen time without breaks.
+- Hybrid and onsite workers report more back pain, which could be linked to workstation setups, commuting posture, or inconsistent ergonomics.
+
+---
+
+**Insights:**
+
+Physical health issues show **clear patterns** linked to how and where people work — they're not evenly distributed.
+
+- **Remote workers** face elevated risks of **eye strain and fatigue**, consistent with prolonged screen exposure and reduced movement throughout the day.
+- **Hybrid and onsite employees** report more **back and neck pain**, reflecting inconsistent ergonomic setups, long hours at fixed desks, or commuting-related strain.
+- **Education professionals** stand out with high rates of **shoulder pain**, possibly linked to frequent standing, lifting, or multitasking in dynamic classrooms.
+
+These findings underscore the need for **targeted ergonomic strategies**, such as:
+- Ergonomic equipment subsidies for hybrid and remote workers  
+- Screen-time management tools or break reminders for remote teams  
+- Task-specific posture and movement training for educators and operational staff
+
+> By aligning interventions with the **unique physical demands of each role**, organizations can reduce pain-related absenteeism, improve comfort, and enhance productivity.
 
 
 
