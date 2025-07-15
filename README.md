@@ -112,7 +112,7 @@ This project integrates Python-based data science tools to explore the relations
 |----------------------------|-------------------------------------------------------------------------|
 | **Python (Pandas, NumPy)** | Data loading, cleaning, manipulation, and aggregation                  |
 | **Matplotlib & Seaborn**   | Data visualization through bar charts, heatmaps, and distribution plots |
-| **Google Colab / Jupyter** | Interactive coding environment for exploratory analysis and visualization |
+| **Google Colab**           | Interactive coding environment for exploratory analysis and visualization |
 | **Markdown / GitHub**      | Project documentation and version control                              |
 
 ---
