@@ -190,12 +190,9 @@ To identify how different work environments — **Remote**, **Hybrid**, and **On
 
 This analysis helps organizations tailor **mental wellness support** to specific working conditions.
 
----
 
 ![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Mental%20Health%20Issues%20by%20Work%20Arrangement%20.png)
 
-
----
 
 ```python
 # Filter out 'None' values from mental health
@@ -294,7 +291,7 @@ plt.title("Burnout Level by Work Arrangement")
 plt.show()
 ```
 
-https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20by%20work%20arrangement.png)
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20by%20work%20arrangement.png)
 
 | Work Arrangement | High Burnout | Medium Burnout | Low Burnout | Total |
 |------------------|--------------|----------------|-------------|--------|
@@ -618,6 +615,7 @@ plt.show()
 The pivot table shows a clear rise in high burnout levels as isolation scores increase — especially from score 7 upwards. While average isolation scores are not extremely high overall, conditions like PTSD, Depression, and Anxiety consistently show higher isolation averages than burnout alone. This suggests that isolation is a stronger emotional trigger for deep mental distress than it is for everyday burnout — though both are impacted.
 
 **Conclusion**
+
 Social isolation appears to be modestly related to burnout, but its stronger emotional impact is seen in more severe mental health challenges.
 Individuals experiencing PTSD and depression reported the highest isolation levels — suggesting that loneliness and disconnection are critical emotional risk factors that go beyond burnout.
 
@@ -721,6 +719,7 @@ plt.show()
 **Insight:** All mental health conditions are most prevalent in the <$60K brackets, especially burnout and anxiety. Mental health challenges decrease as salary increases — highlighting the protective power of financial stability.
 
 **Conclusion**
+
 Employees in lower salary bands and in regions with higher isolation scores (like South America and Asia) face higher risks of burnout and mental health issues. Meanwhile, higher earners ($80K+) report far fewer issues, and regions like Europe and Africa show relatively lower social isolation.
 
 These patterns suggest that economic strain and regional context are significant drivers of employee well-being.
@@ -812,6 +811,7 @@ mh_wlb_summary = mh_wlb.groupby(["WLB_Category", "Mental_Health_Status"]).size()
 **Insight:** As work-life balance improves, the frequency of burnout and depression decreases, while milder issues like anxiety remain more stable. This suggests strong balance may reduce severity, but not eliminate stress entirely.
 
 **Interpretation**
+
 Employees with poor work-life balance are significantly more likely to report high burnout and serious conditions like depression and burnout. By contrast, those with good balance tend to report fewer severe issues and more manageable stress symptoms like anxiety or ADHD. This confirms that work-life balance plays a protective role in mental health and emotional exhaustion.
 
 ## Recommendations
