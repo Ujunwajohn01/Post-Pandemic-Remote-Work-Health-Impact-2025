@@ -183,15 +183,13 @@ Before analysis, the dataset was cleaned and prepared to ensure consistency, acc
 The result was a **clean, structured DataFrame** ready for targeted analysis by demographic, regional, and health-related dimensions.
 
 ## Key Analysis and Insights
+
 ### Q1. What types of mental health issues are more common for each work arrangement?
 
 **Objective**
 To identify how different work environments — **Remote**, **Hybrid**, and **Onsite** — influence the type and frequency of mental health issues reported by employees.
 
 This analysis helps organizations tailor **mental wellness support** to specific working conditions.
-
-
-![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Mental%20Health%20Issues%20by%20Work%20Arrangement%20.png)
 
 
 ```python
@@ -215,6 +213,8 @@ plt.legend(title="Mental Health Condition", bbox_to_anchor=(1.05, 1), loc="upper
 plt.tight_layout()
 plt.show()
 ```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Mental%20Health%20Issues%20by%20Work%20Arrangement%20.png)
 
 ---
 
@@ -240,7 +240,8 @@ After cleaning and exploding multi-response entries from the `Mental_Health_Stat
 - **Remote workers**, while shielded from some stressors, are more vulnerable to **isolation** and **anxiety**, potentially due to lack of daily in-person connection.  
 - **Hybrid work** appears to strike a balance, showing a **diversified but moderate risk profile**, supporting its reputation as a more sustainable long-term model.
 
----
+
+
 
 
 ### Q2. What factors are most associated with high burnout levels?
@@ -724,12 +725,12 @@ Employees in lower salary bands and in regions with higher isolation scores (lik
 
 These patterns suggest that economic strain and regional context are significant drivers of employee well-being.
 
-> 💡 Key Findings: Salary & Region Impact
+> Key Findings: Salary & Region Impact
 >
-> - 🌍 **South America** has the highest isolation and high burnout proportion
-> - 💰 **Burnout drops** significantly in employees earning **$80K+**
-> - 😰 **Anxiety, depression, and PTSD** are most common in the **<$60K income group**
-> - 🧭 Regional culture and salary may shape access to support, flexibility, and well-being
+> - **South America** has the highest isolation and high burnout proportion
+> - **Burnout drops** significantly in employees earning **$80K+**
+> - **Anxiety, depression, and PTSD** are most common in the **<$60K income group**
+> - Regional culture and salary may shape access to support, flexibility, and well-being
 
 ### Q6. How does work-life balance correlate with burnout and mental health?
 
@@ -894,7 +895,15 @@ This project provides a comprehensive view of how remote and hybrid work environ
 
 ## Contact
 
+**Name:** Obianujunwa Vivian John
 
+**Email:** ujunwajohn01@gmail.com
+
+**Location:** Lagos, Nigeria
+
+**Role Target:** Data Analyst
+
+**THANK YOU!**
 
 
 
