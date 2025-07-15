@@ -161,7 +161,7 @@ Before analysis, the dataset was cleaned and prepared to ensure consistency, acc
 
 The result was a **clean, structured DataFrame** ready for targeted analysis by demographic, regional, and health-related dimensions.
 
-## Key Analysis and Insights
+## Key Analysis and Insights)
 ### Q1. What types of mental health issues are more common for each work arrangement?
 
 **Objective**
@@ -171,29 +171,11 @@ This analysis helps organizations tailor **mental wellness support** to specific
 
 ---
 
-**Key Findings**
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Mental%20Health%20Issues%20by%20Work%20Arrangement%20.png)
 
-After cleaning and exploding multi-response entries from the `Mental_Health_Status` column, we found the following:
-
-| Work Arrangement | Top Mental Health Issues                 | Notable Counts                       |
-|------------------|-------------------------------------------|--------------------------------------|
-| **Onsite**       | Burnout, Depression, PTSD                 | Burnout (80), Depression (78), PTSD (65) |
-| **Hybrid**       | Anxiety, Burnout, Depression              | Anxiety (72), Burnout (70), Depression (65) |
-| **Remote**       | Anxiety, Burnout, Isolation               | Anxiety (60), Burnout (55), Isolation (48) |
-
-- **Onsite workers** reported the **highest number of severe psychological conditions** (e.g. PTSD, Depression).
-- **Remote workers** showed higher incidence of **anxiety** and **isolation-related conditions**.
-- **Hybrid workers** had a more balanced distribution, with moderately high levels across several conditions.
 
 ---
 
-**Interpretation**
-
-- **Onsite employees are most at risk** for intense, chronic stress and emotional strain — likely due to environmental factors, rigid schedules, and commuting.  
-- **Remote workers**, while shielded from some stressors, are more vulnerable to **isolation** and **anxiety**, potentially due to lack of daily in-person connection.  
-- **Hybrid work** appears to strike a balance, showing a **diversified but moderate risk profile**, supporting its reputation as a more sustainable long-term model.
-
----
 ```python
 # Filter out 'None' values from mental health
 mh_df = df[df["Mental_Health_Status"] != "None"].copy()
@@ -215,6 +197,33 @@ plt.legend(title="Mental Health Condition", bbox_to_anchor=(1.05, 1), loc="upper
 plt.tight_layout()
 plt.show()
 ```
+
+---
+
+**Key Findings**
+
+After cleaning and exploding multi-response entries from the `Mental_Health_Status` column, we found the following:
+
+| Work Arrangement | Top Mental Health Issues                  | Notable Counts                         |
+|------------------|-------------------------------------------|---------------------------------------|
+| **Onsite**       | Burnout, Depression, PTSD                 | Burnout (80), Depression (78), PTSD (65)   |
+| **Hybrid**       | Anxiety, Burnout, Depression              | Anxiety (72), Burnout (70), Depression (65) |
+| **Remote**       | Anxiety, Burnout, Isolation               | Anxiety (60), Burnout (55), Isolation (48)  |
+
+- **Onsite workers** reported the **highest number of severe psychological conditions** (e.g. PTSD, Depression).
+- **Remote workers** showed higher incidence of **anxiety** and **isolation-related conditions**.
+- **Hybrid workers** had a more balanced distribution, with moderately high levels across several conditions.
+
+---
+
+**Interpretation**
+
+- **Onsite employees are most at risk** for intense, chronic stress and emotional strain — likely due to environmental factors, rigid schedules, and commuting.  
+- **Remote workers**, while shielded from some stressors, are more vulnerable to **isolation** and **anxiety**, potentially due to lack of daily in-person connection.  
+- **Hybrid work** appears to strike a balance, showing a **diversified but moderate risk profile**, supporting its reputation as a more sustainable long-term model.
+
+---
+
 
 ### Q2. What factors are most associated with high burnout levels?
 
