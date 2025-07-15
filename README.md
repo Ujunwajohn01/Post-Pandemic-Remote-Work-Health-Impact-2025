@@ -1,6 +1,27 @@
 # Post-Pandemic-Remote-Work-Health-Impact-2025
 A Python Data Analytics project that investigates how the shift to remote and hybrid work models following the COVID-19 pandemic has influenced employees' mental and physical health, burnout levels, work-life balance, and overall well-being. 
 
+## Table of Contents
+- [Introduction](#-introduction)
+- [Project Overview](#-project-overview)
+- [Project Scope](#-project-scope)
+- [Business Objectives](#-business-objectives)
+- [Use Case](#-use-case)
+- [Data Source](#-data-source)
+- [Dataset Overview](#-dataset-overview)
+- [Data Cleaning & Processing](#-data-cleaning--processing)
+- [Key Analysis and Insights](#-key-analysis-and-insights)
+  - [Q1. What types of mental health issues are more common for each work arrangement?](#q1-what-types-of-mental-health-issues-are-more-common-for-each-work-arrangement)
+  - [Q2. What factors are most associated with high burnout levels?](#q2-what-factors-are-most-associated-with-high-burnout-levels)
+  - [Q3. Are there any notable physical health issues reported, and do they vary by industry or work arrangement?](#q3-are-there-any-notable-physical-health-issues-reported-and-do-they-vary-by-industry-or-work-arrangement)
+  - [Q4. What role does social isolation play in burnout and mental health?](#q4-what-role-does-social-isolation-play-in-burnout-and-mental-health)
+  - [Q5. Do salary and region influence employee well-being and burnout levels?](#q5-do-salary-and-region-influence-employee-well-being-and-burnout-levels)
+  - [Q6. How does work-life balance correlate with burnout and mental health?](#q6-how-does-work-life-balance-correlate-with-burnout-and-mental-health)
+- [Recommendations](#-recommendations)
+- [Conclusion](#-conclusion)
+- [Contact](#-contact)
+
+
 ## Introduction
 
 In the aftermath of COVID-19, organizations worldwide adopted remote and hybrid work models at an unprecedented scale. While these changes brought flexibility and safety, they also introduced new challenges—social isolation, blurred work-life boundaries, and rising mental health concerns.
@@ -161,7 +182,7 @@ Before analysis, the dataset was cleaned and prepared to ensure consistency, acc
 
 The result was a **clean, structured DataFrame** ready for targeted analysis by demographic, regional, and health-related dimensions.
 
-## Key Analysis and Insights)
+## Key Analysis and Insights
 ### Q1. What types of mental health issues are more common for each work arrangement?
 
 **Objective**
@@ -251,6 +272,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20by%20Gender.png)
+
 | Gender | High Burnout | Medium Burnout | Low Burnout | Total |
 |--------|--------------|----------------|-------------|-------|
 | Male   | 56           | 80             | 44          | 180   |
@@ -270,6 +293,8 @@ sns.barplot(data=burnout_by_arrangement, x="Work_Arrangement", y="Count", hue="B
 plt.title("Burnout Level by Work Arrangement")
 plt.show()
 ```
+
+https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20by%20work%20arrangement.png)
 
 | Work Arrangement | High Burnout | Medium Burnout | Low Burnout | Total |
 |------------------|--------------|----------------|-------------|--------|
@@ -298,6 +323,8 @@ plt.legend(title="Burnout Level")
 plt.tight_layout()
 plt.show()
 ```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20by%20working%20hours.png)
 
 | Hours Group | High Burnout | Medium Burnout | Low Burnout | Total |
 |-------------|--------------|----------------|-------------|--------|
@@ -329,6 +356,8 @@ plt.legend(title="Burnout Level")
 plt.tight_layout()
 plt.show()
 ```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20by%20Age%20group.png)
 
 | Age Group | High Burnout | Medium Burnout | Low Burnout | Total |
 |-----------|--------------|----------------|-------------|--------|
@@ -395,6 +424,9 @@ plt.tight_layout()
 plt.show()
 ```
 
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Common%20Physical%20Health%20Issues.png)
+
+
 | Physical Health Issue | Count |
 |------------------------|-------|
 | Back Pain              | 287   |
@@ -421,6 +453,8 @@ plt.legend(title="Health Issue", bbox_to_anchor=(1.05, 1), loc="upper left")
 plt.tight_layout()
 plt.show()
 ```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Physical%20Health%20Issues%20by%20Industry.png)
 
 | Industry              | Most Reported Issue | Count |
 |-----------------------|----------------------|-------|
@@ -454,6 +488,8 @@ plt.tight_layout()
 plt.show()
 ```
 
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Physical%20Health%20Issues%20by%20work%20arrangement%20.png)
+
 | Work Arrangement | Most Reported Issue | Count |
 |------------------|----------------------|-------|
 | Remote           | Eye Strain           | 96    |
@@ -480,6 +516,387 @@ These findings underscore the need for **targeted ergonomic strategies**, such a
 - Task-specific posture and movement training for educators and operational staff
 
 > By aligning interventions with the **unique physical demands of each role**, organizations can reduce pain-related absenteeism, improve comfort, and enhance productivity.
+
+### Q4. What role does social isolation play in burnout and mental health?
+
+**Objective**
+
+To understand whether **social isolation** influences the likelihood of reporting burnout or other mental health conditions. This helps highlight the **emotional impact of disconnected work environments** and informs policies that prioritize connection and support.
+
+---
+
+**Data Cleaning & Processing**
+
+- Removed all rows where `Mental_Health_Status` was `"None"`, since these do not contribute to meaningful mental health analysis.
+- Used `str.split('; ')` and `explode()` on `Mental_Health_Status` to handle multi-condition responses.
+- Focused the comparison on two key columns:
+  - `Social_Isolation_Score` (1–10 scale)
+  - `Burnout_Level` or individual `Mental_Health_Status` entries
+
+```python
+# CLEANING
+mh_isolation = df[df["Mental_Health_Status"] != "None"].copy()
+mh_isolation["Mental_Health_Status"] = mh_isolation["Mental_Health_Status"].str.split("; ")
+mh_isolation = mh_isolation.explode("Mental_Health_Status")
+```
+
+---
+
+**Data Preparation**
+
+We used the `Social_Isolation_Score` (rated 1–10 by each employee) to compare against two outcomes:
+
+- **Burnout_Level** (Low, Medium, High)
+- **Mental_Health_Status** (multi-label: Anxiety, Depression, etc.)
+
+---
+
+**Step A: Social Isolation Score by Burnout Level**
+
+We examined how the frequency of burnout levels changes across different levels of social isolation.
+
+```python
+burnout_pivot = df.pivot_table(
+    index="Social_Isolation_Score",
+    columns="Burnout_Level",
+    aggfunc="size",
+    fill_value=0
+)
+plt.figure(figsize=(8, 6))
+sns.heatmap(burnout_pivot, annot=True, fmt="d", cmap="YlOrRd")
+plt.title("Burnout Level by Social Isolation Score")
+plt.xlabel("Burnout Level")
+plt.ylabel("Social Isolation Score")
+plt.tight_layout()
+plt.show()
+````
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20level%20by%20social%20isolation%20score.png)
+
+**Key Observations:**
+
+- High burnout cases increase consistently with higher isolation scores
+- At isolation scores 8–10, High Burnout becomes the dominant category
+- Low burnout is most common at isolation scores 1–3, then drops sharply
+
+This pattern suggests a strong positive correlation between isolation and burnout severity.
+
+---
+
+**Step B: Social Isolation Score by Mental Health Condition**
+
+```python
+mh_pivot = mh_df.pivot_table(
+    index="Social_Isolation_Score",
+    columns="Mental_Health_Status",
+    aggfunc="size",
+    fill_value=0
+)
+
+plt.figure(figsize=(12, 6))
+sns.heatmap(mh_pivot, annot=True, fmt="d", cmap="BuPu")
+plt.title("Mental Health Issues by Social Isolation Score")
+plt.xlabel("Mental Health Issue")
+plt.ylabel("Social Isolation Score")
+plt.tight_layout()
+plt.show()
+```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Mental%20Health%20Issues%20by%20Social%20Isolation%20score.png)
+
+| Mental Health Condition | Avg. Social Isolation Score |
+|--------------------------|-----------------------------|
+| PTSD                     | 2.85                        |
+| Depression               | 2.78                        |
+| Anxiety                  | 2.70                        |
+| ADHD                     | 2.64                        |
+| Stress Disorder          | 2.63                        |
+| Burnout                  | 2.52                        |
+
+
+**Insights:**
+The pivot table shows a clear rise in high burnout levels as isolation scores increase — especially from score 7 upwards. While average isolation scores are not extremely high overall, conditions like PTSD, Depression, and Anxiety consistently show higher isolation averages than burnout alone. This suggests that isolation is a stronger emotional trigger for deep mental distress than it is for everyday burnout — though both are impacted.
+
+**Conclusion**
+Social isolation appears to be modestly related to burnout, but its stronger emotional impact is seen in more severe mental health challenges.
+Individuals experiencing PTSD and depression reported the highest isolation levels — suggesting that loneliness and disconnection are critical emotional risk factors that go beyond burnout.
+
+These findings highlight the importance of fostering emotional connection, team belonging, and proactive outreach, especially for those at risk of deeper mental health strain.
+
+### Q5. Do salary and region influence employee well-being and burnout levels?
+
+**Objective**
+
+To assess whether **salary** and **geographic region** are linked to differences in **burnout**, **mental health**, and **social isolation**. This helps uncover whether economic or cultural environments play a role in workplace well-being.
+
+---
+
+**Step A: Burnout Level by Salary Range**
+
+```python
+burnout_salary = df[df["Mental_Health_Status"] == "Burnout"].groupby(["Salary_Range", "Burnout_Level"]).size().reset_index(name="Count")
+
+plt.figure(figsize=(10, 6))
+sns.barplot(data=burnout_salary, x="Salary_Range", y="Count", hue="Burnout_Level", palette="magma")
+plt.title("Burnout Levels by Salary Range")
+plt.xlabel("Salary Range")
+plt.ylabel("Number of Burnout Cases")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20level%20by%20salary%20range%20.png)
+
+| Salary Range   | High Burnout | Medium Burnout | Low Burnout | Total |
+|----------------|--------------|----------------|-------------|--------|
+| <$40K          | 36           | 41             | 28          | 105    |
+| $40K–$60K      | 34           | 47             | 33          | 114    |
+| $60K–$80K      | 18           | 34             | 26          | 78     |
+| $80K–$100K     | 11           | 18             | 20          | 49     |
+| $100K+         | 9            | 10             | 14          | 33     |
+
+**Insight:** Lower-income groups (especially <$60K) show substantially higher burnout, particularly in the high and medium categories. Burnout rates drop noticeably at higher salary levels.
+
+---
+
+**Step B: Social Isolation Score by Region**
+```python
+isolation_region = df.groupby("Region")["Social_Isolation_Score"].mean().reset_index().sort_values("Social_Isolation_Score", ascending=False)
+
+plt.figure(figsize=(10, 5))
+sns.barplot(data=isolation_region, x="Region", y="Social_Isolation_Score", palette="Blues_r")
+plt.title("Average Social Isolation Score by Region")
+plt.ylabel("Avg. Social Isolation")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Social%20Isolation%20score%20by%20region.png)
+
+| Region        | Avg. Social Isolation Score |
+|---------------|-----------------------------|
+| South America | 3.01                        |
+| Asia          | 2.88                        |
+| North America | 2.72                        |
+| Europe        | 2.55                        |
+| Africa        | 2.50                        |
+
+
+**Insight:** South America and Asia show the highest average isolation scores. This may reflect infrastructure challenges or fewer internal support systems.
+
+---
+
+**Step C: Mental Health Conditions by Salary Range**
+
+```python
+mh_salary = df[df["Mental_Health_Status"] != "None"].copy()
+mh_salary["Mental_Health_Status"] = mh_salary["Mental_Health_Status"].str.split("; ")
+mh_salary = mh_salary.explode("Mental_Health_Status")
+
+mh_salary_summary = mh_salary.groupby("Salary_Range")["Mental_Health_Status"].value_counts().unstack().fillna(0)
+
+plt.figure(figsize=(12, 6))
+sns.barplot(data=mh_salary, x="Salary_Range", y="Count", hue="Mental_Health_Status", palette="Spectral")
+plt.title("Mental Health Conditions by Salary Range")
+plt.xlabel("Salary Range")
+plt.ylabel("Number of Employees")
+plt.legend(title="Mental Health Status", bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.tight_layout()
+plt.show()
+```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Mental%20Health%20conditions%20by%20Salary%20range%20.png)
+
+| Salary Range | Anxiety | Burnout | Depression | PTSD |
+|--------------|---------|---------|------------|------|
+| <$40K        | 62      | 66      | 43         | 39   |
+| $40K–$60K    | 58      | 61      | 41         | 33   |
+| $60K–$80K    | 34      | 35      | 22         | 19   |
+| $80K–$100K   | 19      | 22      | 15         | 9    |
+| $100K+       | 14      | 16      | 8          | 5    |
+
+
+**Insight:** All mental health conditions are most prevalent in the <$60K brackets, especially burnout and anxiety. Mental health challenges decrease as salary increases — highlighting the protective power of financial stability.
+
+**Conclusion**
+Employees in lower salary bands and in regions with higher isolation scores (like South America and Asia) face higher risks of burnout and mental health issues. Meanwhile, higher earners ($80K+) report far fewer issues, and regions like Europe and Africa show relatively lower social isolation.
+
+These patterns suggest that economic strain and regional context are significant drivers of employee well-being.
+
+> 💡 Key Findings: Salary & Region Impact
+>
+> - 🌍 **South America** has the highest isolation and high burnout proportion
+> - 💰 **Burnout drops** significantly in employees earning **$80K+**
+> - 😰 **Anxiety, depression, and PTSD** are most common in the **<$60K income group**
+> - 🧭 Regional culture and salary may shape access to support, flexibility, and well-being
+
+### Q6. How does work-life balance correlate with burnout and mental health?
+
+**Objective**
+
+To explore how **work-life balance** affects two key outcomes:
+- **Burnout Level** (Low, Medium, High)
+- **Mental Health Status** (Anxiety, Depression, Burnout, etc.)
+
+This helps evaluate whether perceived balance between work and life is a protective factor against emotional exhaustion and mental health decline.
+
+---
+
+**Data Cleaning & Preparation**
+
+- Used the column `Work_Life_Balance_Score` (assumed to range from 1–10).
+- Converted mental health status to individual rows using `explode()`.
+- Grouped both burnout and mental health conditions by **balance score ranges**.
+
+---
+
+**Step A: Burnout Level by Work-Life Balance Score**
+
+```python
+wlb_burnout = df[df["Mental_Health_Status"] == "Burnout"].copy()
+wlb_burnout["WLB_Category"] = pd.cut(
+    wlb_burnout["Work_Life_Balance_Score"],
+    bins=[0, 3, 6, 10],
+    labels=["Poor", "Moderate", "Good"]
+)
+
+burnout_wlb_summary = wlb_burnout.groupby(["WLB_Category", "Burnout_Level"]).size().reset_index(name="Count")
+
+# Plot
+sns.barplot(data=burnout_wlb_summary, x="WLB_Category", y="Count", hue="Burnout_Level", palette="Spectral")
+plt.title("Burnout Level by Work-Life Balance")
+plt.xlabel("Work-Life Balance")
+plt.ylabel("Number of Burnout Cases")
+plt.tight_layout()
+plt.show()
+```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/Burnout%20levels%20by%20work-life-balance.png)
+
+| Work-Life Balance | High Burnout | Medium Burnout | Low Burnout | Total |
+|-------------------|--------------|----------------|-------------|--------|
+| Poor              | 41           | 51             | 20          | 112    |
+| Moderate          | 34           | 49             | 33          | 116    |
+| Good              | 16           | 24             | 33          | 73     |
+
+**Insight:** Employees with poor work-life balance reported the highest number of high burnout cases (41), while those with good balance showed a clear shift toward low burnout.
+
+---
+
+**Step B: Mental Health Status by Work-Life Balance Score**
+```python
+mh_wlb = df[df["Mental_Health_Status"] != "None"].copy()
+mh_wlb["Mental_Health_Status"] = mh_wlb["Mental_Health_Status"].str.split("; ")
+mh_wlb = mh_wlb.explode("Mental_Health_Status")
+
+mh_wlb["WLB_Category"] = pd.cut(
+    mh_wlb["Work_Life_Balance_Score"],
+    bins=[0, 3, 6, 10],
+    labels=["Poor", "Moderate", "Good"]
+)
+
+mh_wlb_summary = mh_wlb.groupby(["WLB_Category", "Mental_Health_Status"]).size().reset_index(name="Count")
+```
+
+![](https://github.com/Ujunwajohn01/Post-Pandemic-Remote-Work-Health-Impact-2025/blob/main/mental%20health%20issues%20by%20work-life%20balance.png)
+
+| Work-Life Balance | Top Mental Health Issues         | Most Reported Issue | Count |
+|-------------------|----------------------------------|----------------------|--------|
+| Poor              | Burnout, Anxiety, Depression      | Burnout              | 53     |
+| Moderate          | Burnout, Anxiety, Depression      | Burnout              | 49     |
+| Good              | Anxiety, ADHD, Burnout            | Anxiety              | 24     |
+
+
+**Insight:** As work-life balance improves, the frequency of burnout and depression decreases, while milder issues like anxiety remain more stable. This suggests strong balance may reduce severity, but not eliminate stress entirely.
+
+**Interpretation**
+Employees with poor work-life balance are significantly more likely to report high burnout and serious conditions like depression and burnout. By contrast, those with good balance tend to report fewer severe issues and more manageable stress symptoms like anxiety or ADHD. This confirms that work-life balance plays a protective role in mental health and emotional exhaustion.
+
+## Recommendations
+
+Based on the insights uncovered in this project, the following data-driven recommendations are proposed to improve employee well-being:
+
+
+**1. Prioritize Mental Health in Hybrid and Onsite Models**
+- Burnout and depression were most commonly reported among **hybrid and onsite** workers.
+- Employers should invest in:
+  - **Onsite wellness programs**
+  - Regular **mental health check-ins**
+  - Quiet or decompression zones in physical offices
+
+
+**2. Address Burnout in the 26–35 Age Group & Long Work Hours**
+- Employees aged **26–35** working **46–60 hours/week** reported the **highest burnout rates**.
+- Solutions:
+  - Implement workload management and **time-off policies**
+  - Monitor hours via self-reporting or scheduling software
+  - Create coaching programs for early-career employees
+
+
+**3. Improve Work-Life Balance to Reduce Mental Health Strain**
+- **High burnout (41 cases)** and **depression** were most common in employees with **poor WLB scores**.
+- Encourage:
+  - **Flexible scheduling** and autonomy
+  - Clear separation of working and non-working hours
+  - Training for managers on respecting work-life boundaries
+
+
+**4. Consider Regional and Salary-Based Support Disparities**
+- **South America and Asia** showed higher isolation scores and burnout.
+- Lower-income employees (earning **<$60K**) had the **highest mental health challenges**.
+- Recommendations:
+  - Tailor interventions to **regional culture & digital access**
+  - Provide mental health support that's **cost-free and confidential**
+  - Include **stipends or resources** to improve remote work environments
+
+
+**5. Combat Physical Health Issues with Ergonomic Solutions**
+- **Back pain** and **eye strain** were the most common issues.
+- Solutions:
+  - Subsidize ergonomic chairs, monitors, and lighting
+  - Provide education on posture and movement
+  - Encourage **breaks and eye-rest intervals** in all work arrangements
+
+
+**6. Tackle Social Isolation — Especially in Mental Health-Sensitive Roles**
+- **High burnout** was concentrated in employees with **high isolation scores (8–10)**.
+- **PTSD and depression** also had the **highest average isolation ratings**.
+- Interventions:
+  - Create **virtual peer groups or buddy systems**
+  - Include **structured social time** in remote meetings
+  - Train managers to spot signs of isolation and intervene early
+
+
+## Conclusion
+
+This project provides a comprehensive view of how remote and hybrid work environments impact **mental and physical health**, **burnout**, and **employee well-being** across demographics, regions, and industries.
+
+**Key Takeaways:**
+- **Burnout** is most prevalent in:
+  - **Younger professionals**
+  - Those with **poor work-life balance**
+  - Employees working **long hours**
+  - Lower-income and **onsite or hybrid roles**
+
+- **Mental health issues** like depression, anxiety, and PTSD correlate more with:
+  - **Isolation**
+  - **Economic vulnerability**
+  - **Lack of autonomy**
+
+- **Physical complaints** such as back pain and eye strain are widespread, especially in **technology-heavy roles**, and vary by work model.
+
+### Final Thought:
+> A data-informed approach to wellness shows that **employee health is multi-dimensional** — shaped by workload, flexibility, salary, connection, and role design.
+>  
+> Organizations that invest in **customized, inclusive, and proactive well-being strategies** will benefit not just from healthier employees, but also from **improved retention, productivity, and culture**.
+
+## Contact
+
+
+
+
 
 
 
