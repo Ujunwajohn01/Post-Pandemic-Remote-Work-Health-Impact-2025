@@ -366,7 +366,8 @@ plt.show()
 | 60+       | 15           | 14             | 11          | 40     |
 
 
-**Interpretation:** The 26–35 age group had the highest number of high burnout cases, supporting the idea that early-career professionals face intense pressure.
+**Interpretation:** The 46–60 age group had the highest number of high burnout cases (36), suggesting that individuals in late-mid to senior career stages may be experiencing significant stress—possibly from cumulative responsibilities, leadership pressures, or work-life balance challenges. While the 26–35 group (29 cases) also shows high burnout, it's not the peak.
+
 
 ---
 
@@ -376,7 +377,7 @@ Burnout is not driven by a single factor — rather, it emerges from the interse
 
 Working hours are a major contributor: employees working 46–60 hours per week reported the highest number of high burnout cases (55). This suggests that sustained extended hours significantly increase emotional and physical strain, especially without adequate support.
 
-Age plays a crucial role: the 26–35 age group reported the highest high burnout count (29). This demographic likely includes early- to mid-career professionals navigating career development, increased responsibilities, and life transitions — all of which contribute to pressure and fatigue.
+Age plays a crucial role: the 46–60 age group reported the highest number of high burnout cases (36). This demographic likely includes experienced professionals in senior roles, managing both workplace demands and personal responsibilities, which can contribute to sustained pressure and fatigue. The 26–35 group follows closely with 29 cases, suggesting that early- to mid-career professionals also face considerable stress due to career development, increasing responsibilities, and major life transitions.
 
 Work arrangement matters: Onsite workers had the highest total burnout levels, including 46 high burnout cases. Unlike remote or hybrid settings, onsite roles may offer less flexibility, more commuting stress, and fewer opportunities for autonomy or personalized routines.
 
